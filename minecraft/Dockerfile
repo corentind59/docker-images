@@ -1,19 +1,19 @@
-FROM openjdk:15
+FROM openjdk:15-slim
 
 WORKDIR /app
 
 RUN whoami
 
 # Download Minecraft server 1.15
-RUN yum update -q -y && \
-  yum install wget -q -y && \
+RUN apt-get update -q -y && \
+  apt-get install wget -q -y && \
   wget -q https://launcher.mojang.com/v1/objects/bb2b6b1aefcd70dfd1892149ac3a215f6c636b07/server.jar
 
 # Agree to EULA
 RUN echo 'eula=true' > eula.txt
 
 # Creating user minecraft
-RUN adduser minecraft && \
+RUN adduser --disabled-password --gecos "" minecraft && \
   chown minecraft:minecraft -R /app && \
   chmod 774 -R /app
 
