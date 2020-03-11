@@ -2,8 +2,6 @@ FROM openjdk:15-slim
 
 WORKDIR /app
 
-RUN whoami
-
 # Download Minecraft server 1.15
 RUN apt-get update -q -y && \
   apt-get install wget -q -y && \
@@ -13,7 +11,7 @@ RUN apt-get update -q -y && \
 RUN echo 'eula=true' > eula.txt
 
 # Creating user minecraft
-RUN adduser --disabled-password --gecos "" minecraft && \
+RUN useradd -md /home/minecraft minecraft && \
   chown minecraft:minecraft -R /app && \
   chmod 774 -R /app
 
